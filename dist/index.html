@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="de" class="h-full bg-slate-950 text-slate-100">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DevPulse – Developer Dashboard</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+  <script type="module" crossorigin src="/assets/index-DYQCT6wp.js"></script>
+  <link rel="stylesheet" crossorigin href="/assets/index-DRzD3AiI.css">
+</head>
+<body class="h-full flex flex-col antialiased selection:bg-cyan-500 selection:text-slate-950">
+
+    <!-- Header -->
+    <header class="border-b border-slate-800 bg-slate-900/50 backdrop-blur px-6 py-4 flex items-center justify-between">
+        <div class="flex items-center space-x-3">
+            <span class="inline-block w-3 h-3 bg-cyan-500 rounded-full animate-pulse"></span>
+            <h1 class="text-xl font-bold tracking-tight text-white">DevPulse</h1>
+        </div>
+        <div class="text-sm text-slate-400">
+            Offline-First Developer Utility
+        </div>
+    </header>
+
+    <!-- Main Dashboard Grid -->
+    <main class="flex-1 p-6 overflow-y-auto">
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-7xl mx-auto">
+            
+            <!-- Widget 1: Quick Notes -->
+            <div class="bg-slate-900 border border-slate-800 rounded-xl p-5 flex flex-col h-80 shadow-lg">
+                <div class="flex items-center justify-between mb-3">
+                    <h2 class="font-semibold text-slate-200 flex items-center gap-2">
+                        <span>📝</span> Quick Notes
+                    </h2>
+                    <span class="text-xs text-slate-500">Auto-saves</span>
+                </div>
+                <textarea id="notes-input" class="flex-1 bg-slate-950 border border-slate-800 rounded-lg p-3 text-sm text-slate-200 focus:outline-none focus:border-cyan-500 resize-none font-mono" placeholder="Notizen hier eintippen..."></textarea>
+            </div>
+
+          <!-- Widget 2: JSON Formatter & Validator (Spannt über 2 Spalten auf großen Screens) -->
+            <div class="bg-slate-900 border border-slate-800 rounded-xl p-5 flex flex-col h-96 shadow-lg md:col-span-2">
+                <div class="flex items-center justify-between mb-3">
+                    <h2 class="font-semibold text-slate-200 flex items-center gap-2">
+                        <span>🔧</span> JSON Formatter & Validator
+                    </h2>
+                    <div class="flex gap-2">
+                        <button id="json-format-btn" class="text-xs bg-cyan-600 hover:bg-cyan-500 text-white px-3 py-1 rounded transition font-medium">Format</button>
+                        <button id="json-minify-btn" class="text-xs bg-slate-800 hover:bg-slate-700 text-slate-300 px-3 py-1 rounded transition font-medium">Minify</button>
+                        <button id="json-copy-btn" class="text-xs bg-slate-800 hover:bg-slate-700 text-slate-300 px-3 py-1 rounded transition font-medium">Copy</button>
+                    </div>
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-3 flex-1 overflow-hidden">
+                    <textarea id="json-input" class="bg-slate-950 border border-slate-800 rounded-lg p-3 text-xs text-slate-200 focus:outline-none focus:border-cyan-500 resize-none font-mono" placeholder='{"beispiel": "JSON hier einfügen..."}'></textarea>
+                    <div class="relative flex flex-col bg-slate-950 border border-slate-800 rounded-lg overflow-hidden">
+                        <pre id="json-output" class="flex-1 p-3 text-xs text-cyan-300 overflow-auto font-mono select-all m-0"></pre>
+                        <div id="json-status" class="absolute bottom-2 right-3 text-[10px] text-slate-500 font-mono">Bereit</div>
+                    </div>
+                </div>
+            </div>
+
+          <!-- Widget 3: Regex Tester (Full Width in Row 2) -->
+            <div class="bg-slate-900 border border-slate-800 rounded-xl p-5 flex flex-col h-96 shadow-lg lg:col-span-3">
+                <div class="flex items-center justify-between mb-3">
+                    <h2 class="font-semibold text-slate-200 flex items-center gap-2">
+                        <span>🔍</span> Regex Tester
+                    </h2>
+                    <div id="regex-status" class="text-xs text-slate-500 font-mono">Bereit</div>
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-4 flex-1 overflow-hidden">
+                    <!-- Links: Eingaben -->
+                    <div class="flex flex-col gap-3 md:col-span-1">
+                        <div class="flex gap-2">
+                            <div class="flex-1">
+                                <label class="block text-[10px] text-slate-400 font-mono mb-1">MUSTER (PATTERN)</label>
+                                <input id="regex-pattern" type="text" class="w-full bg-slate-950 border border-slate-800 rounded-lg p-2 text-xs text-cyan-300 focus:outline-none focus:border-cyan-500 font-mono" placeholder="z. B. \b[A-Za-z0-9._%+-]+@...">
+                            </div>
+                            <div class="w-16">
+                                <label class="block text-[10px] text-slate-400 font-mono mb-1">FLAGS</label>
+                                <input id="regex-flags" type="text" value="g" class="w-full bg-slate-950 border border-slate-800 rounded-lg p-2 text-xs text-slate-200 focus:outline-none focus:border-cyan-500 font-mono text-center">
+                            </div>
+                        </div>
+                        <div class="flex-1 flex flex-col">
+                            <label class="block text-[10px] text-slate-400 font-mono mb-1">TESTTEXT</label>
+                            <textarea id="regex-test-string" class="flex-1 bg-slate-950 border border-slate-800 rounded-lg p-3 text-xs text-slate-200 focus:outline-none focus:border-cyan-500 resize-none font-mono" placeholder="Text zum Durchsuchen hier einfügen..."></textarea>
+                        </div>
+                    </div>
+                    <!-- Rechts: Treffer-Ausgabe -->
+                    <div class="flex flex-col md:col-span-2">
+                        <label class="block text-[10px] text-slate-400 font-mono mb-1">ERGEBNISSE & TREFFER</label>
+                        <div id="regex-output" class="flex-1 bg-slate-950 border border-slate-800 rounded-lg p-3 overflow-auto font-mono text-xs text-slate-400">
+                            [ Warten auf Eingabe... ]
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </main>
+    <!-- JavaScript Anbindung -->
+</body>
+</html>
